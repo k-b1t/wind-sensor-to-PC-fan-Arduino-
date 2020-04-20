@@ -25,7 +25,7 @@ unsigned long lastMillis_checkHiVal;
 unsigned long lastMillis_buildNewSpeed;
 unsigned long lastMillis_spinningFans;
 
-int sensorValue = 10000; 
+int sensorValue = 10000;
 int currentValue = 10000;
 int dreceasingFanSpeedMillis = 100; // millisecond interval in which currentValue will be decreased by 1
 int minimalValue = 1;               // treshol value so smal curent changes dosn't start SetUpNewSpeed(); function
@@ -129,7 +129,8 @@ void ReadSensor()
         WindSpeed_MPH = pow(((RV_Wind_Volts - zeroWind_volts) / .2300), 2.7265);
 
         sensorValue = map(WindSpeed_MPH, 0, maxWindSpeed, 0, 255);
-        PrintStuff();
+        Serial.print(sensorValue);
+        //PrintStuff();
 
         lastMillis_readSensor = millis();
     }
