@@ -67,9 +67,8 @@ void SpinningFans()
     {
         fansAreSpinning = false;
         lastMillis_spinningFans = millis();
-        currentValue =0;
+        currentValue = 0;
         analogWrite(9, currentValue);
-
     }
 }
 
@@ -108,7 +107,7 @@ void CheckHighestValue()
         {
             newhigGestValue = true;
             firstFrameSetupSpeed = true;
-            currentValue = newhigGestValue;
+            currentValue = highestValue;
         }
         lastMillis_checkHiVal = millis();
     }
@@ -129,7 +128,8 @@ void ReadSensor()
         WindSpeed_MPH = pow(((RV_Wind_Volts - zeroWind_volts) / .2300), 2.7265);
 
         sensorValue = map(WindSpeed_MPH, 0, maxWindSpeed, 0, 255);
-        Serial.println(sensorValue);
+        sensorValue = constrain(sensorValue, 0, 255);
+        Serial.print(sensorValue);
         //PrintStuff();
 
         lastMillis_readSensor = millis();
