@@ -27,11 +27,10 @@ unsigned long lastMillis_spinningFans;
 
 int sensorValue = 0;
 int currentValue = 0;
-int minimalValue = 1;               // treshol value so smal curent changes dosn't start SetUpNewSpeed(); function
-float timeToBuildUpNewSpeed = 2.5;  // change this value to increase the time, so the fans can reach the highes sensor value
+int minimalValue = 1;              // treshol value so smal curent changes dosn't start SetUpNewSpeed(); function
+float timeToBuildUpNewSpeed = 2.5; // change this value to increase the time, so the fans can reach the highes sensor value
 bool newhigGestValue = false;
 bool firstFrameSetupSpeed = false;
-bool fansAreBuildingUp = false;
 bool fansAreSpinning = false;
 
 void setup()
@@ -68,6 +67,7 @@ void SpinningFans()
         lastMillis_spinningFans = millis();
         currentValue = 0;
         analogWrite(9, currentValue);
+        Serial.println("stop");
     }
 }
 
@@ -76,18 +76,18 @@ void SetupNewSpeed()
     // functions Setup
     if (firstFrameSetupSpeed)
     {
+        Serial.println("firstFrameSetupSpeed");
         lastMillis_buildNewSpeed = millis();
         firstFrameSetupSpeed = false;
-        fansAreBuildingUp = true;
         analogWrite(9, currentValue);
     }
 
     // time to finish building up the new speed
     if (millis() - lastMillis_buildNewSpeed > 2500)
     {
-        fansAreBuildingUp = false;
         highestValue = false;
         fansAreSpinning = true;
+        lastMillis_spinningFans = millis();
     }
 }
 
@@ -95,7 +95,6 @@ void CheckHighestValue()
 {
     if (sensorValue > highestValue)
     {
-        Serial.println("new highestValue: " + sensorValue);
         highestValue = sensorValue;
     }
 
@@ -107,6 +106,7 @@ void CheckHighestValue()
             newhigGestValue = true;
             firstFrameSetupSpeed = true;
             currentValue = highestValue;
+            Serial.println("new REAL highestValue: " + sensorValue);
         }
         lastMillis_checkHiVal = millis();
     }
