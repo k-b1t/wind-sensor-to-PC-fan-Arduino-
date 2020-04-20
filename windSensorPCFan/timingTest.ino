@@ -129,7 +129,7 @@ void ReadSensor()
         WindSpeed_MPH = pow(((RV_Wind_Volts - zeroWind_volts) / .2300), 2.7265);
 
         sensorValue = map(WindSpeed_MPH, 0, maxWindSpeed, 0, 255);
-        Serial.print(sensorValue);
+        Serial.println(sensorValue);
         //PrintStuff();
 
         lastMillis_readSensor = millis();
