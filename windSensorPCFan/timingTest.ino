@@ -25,9 +25,8 @@ unsigned long lastMillis_checkHiVal;
 unsigned long lastMillis_buildNewSpeed;
 unsigned long lastMillis_spinningFans;
 
-int sensorValue = 10000;
-int currentValue = 10000;
-int dreceasingFanSpeedMillis = 100; // millisecond interval in which currentValue will be decreased by 1
+int sensorValue = 0;
+int currentValue = 0;
 int minimalValue = 1;               // treshol value so smal curent changes dosn't start SetUpNewSpeed(); function
 float timeToBuildUpNewSpeed = 2.5;  // change this value to increase the time, so the fans can reach the highes sensor value
 bool newhigGestValue = false;
@@ -129,7 +128,7 @@ void ReadSensor()
 
         sensorValue = map(WindSpeed_MPH, 0, maxWindSpeed, 0, 255);
         sensorValue = constrain(sensorValue, 0, 255);
-        Serial.print(sensorValue);
+        Serial.println(sensorValue);
         //PrintStuff();
 
         lastMillis_readSensor = millis();
