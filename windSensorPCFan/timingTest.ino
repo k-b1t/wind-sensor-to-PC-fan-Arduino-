@@ -64,7 +64,6 @@ void SpinningFans()
     if (millis() - lastMillis_spinningFans > 3000)
     {
         fansAreSpinning = false;
-        lastMillis_spinningFans = millis();
         currentValue = 0;
         analogWrite(9, currentValue);
         Serial.println("stop");
@@ -79,6 +78,7 @@ void SetupNewSpeed()
         Serial.println("firstFrameSetupSpeed");
         lastMillis_buildNewSpeed = millis();
         firstFrameSetupSpeed = false;
+        newhigGestValue = false;
         analogWrite(9, currentValue);
     }
 
@@ -107,7 +107,11 @@ void CheckHighestValue()
             firstFrameSetupSpeed = true;
             currentValue = highestValue;
             Serial.println("new REAL highestValue: " + sensorValue);
+        }else
+        {
+            newhigGestValue=false;
         }
+        
         lastMillis_checkHiVal = millis();
     }
 }
